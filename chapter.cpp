@@ -163,3 +163,77 @@ void check(){
 
 //12.27-12.30
 //查看chapter1227-1230文件夹
+
+
+//13.5 && 13.8,13.12
+
+#include <iostream>
+using namespace std;
+
+class HasPtr{
+private:
+    string *ps;
+    int i;
+public:
+    HasPtr(const string &s=string()):ps(new string(s)),i(0){
+    
+    }
+    //定义拷贝函数
+    HasPtr(const HasPtr& ptr):ps(new string(*ptr.ps)),i(ptr.i){
+        cout<<"调用拷贝函数"<<endl;
+    }
+
+    HasPtr& operator =(const HasPtr& ptr){
+        i=ptr.i;
+        string * new_ps=new string(*ptr.ps);
+        if(ps){
+            delete  ps;//需要释放当前ps内存
+        }
+        ps=new_ps;
+        cout<<"调用拷贝赋值运算符"<<endl;
+        return *this;
+    }
+    ~HasPtr(){
+        if(ps){
+            delete ps;
+        }
+    }
+
+};
+//16.4
+template<typename T,typename U>
+bool testFind(const T& start,const T& end,const U& result){
+    auto temp=start;
+    for(temp;temp!=end;temp++){
+        if(*temp==result){
+            return 1;
+        }
+
+    }
+    return 0;
+
+}
+//16.5
+template<typename T,unsigned N>
+void testPrint( const T (&arr)[N]){
+    for(auto i:arr){
+        cout<<i;
+
+    }
+    cout<<endl;
+    //或者这么遍历
+    for(unsigned i=0;i<N;i++){
+        cout<<*(arr+i);
+
+    }
+    cout<<endl;
+
+}
+//16.7
+
+template<typename T, unsigned N> size_t gsize(const T(&arr)[N])
+{
+	return N;
+}
+
+
